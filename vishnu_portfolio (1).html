@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vishnu Prasad G — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --accent:  #1D9E75;
+      --accent2: #0F6E56;
+      --dark:    #0a0f0d;
+      --card:    #182219;
+      --border:  rgba(29,158,117,0.2);
+      --text:    #e8f5f0;
+      --muted:   #7aaa94;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* grid bg */
+    .grid-bg {
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(29,158,117,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29,158,117,0.045) 1px, transparent 1px);
+      background-size: 52px 52px;
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; z-index: 1;
+      width: 100%;
+      padding: 4rem 6vw 2.5rem;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 2rem;
+    }
+
+    .hero-left {}
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(29,158,117,0.1);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 16px;
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); font-family: 'DM Mono', monospace;
+      margin-bottom: 1.5rem;
+    }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100%{ opacity:1; transform:scale(1); }
+      50%    { opacity:0.4; transform:scale(0.7); }
+    }
+
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.5rem, 6vw, 7rem);
+      line-height: 1.02; color: #fff; margin-bottom: 0.6rem;
+    }
+    .hero-name span { color: var(--accent); font-style: italic; }
+
+    .hero-sub {
+      font-size: 1rem; color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      margin-bottom: 2rem; letter-spacing: 0.04em;
+    }
+
+    .hero-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(29,158,117,0.08);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 16px;
+      font-size: 12px; color: var(--accent); text-decoration: none;
+      font-family: 'DM Mono', monospace;
+      transition: background 0.2s, border-color 0.2s; cursor: pointer;
+    }
+    .hero-link:hover {
+      background: rgba(29,158,117,0.18);
+      border-color: rgba(29,158,117,0.5);
+    }
+
+    /* hero right — decorative initials */
+    .hero-deco {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(6rem, 14vw, 16rem);
+      font-style: italic;
+      color: rgba(29,158,117,0.06);
+      line-height: 1;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      width: 100%;
+      display: flex;
+      background: rgba(10,15,13,0.93);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 6vw;
+    }
+    .nav-btn {
+      background: none; border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      color: var(--muted);
+      padding: 15px 24px;
+      font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+      font-family: 'Syne', sans-serif; font-weight: 600;
+      cursor: pointer; transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .nav-btn:hover  { color: var(--text); }
+    .nav-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── MAIN ── */
+    main {
+      position: relative; z-index: 1;
+      width: 100%;
+      padding: 3rem 6vw 4rem;
+    }
+
+    .section { display: none; }
+    .section.active {
+      display: block;
+      animation: fadeUp 0.35s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(14px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem; color: #fff;
+      margin-bottom: 2rem;
+    }
+
+    /* ── ABOUT ── */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .about-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-style: italic;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+      border-left: 3px solid var(--accent);
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .about-text {
+      font-size: 15px; color: var(--muted);
+      line-height: 1.9;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 3rem; color: var(--accent); line-height: 1;
+    }
+    .stat-lbl {
+      font-size: 11px; color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .skill-card:hover {
+      border-color: rgba(29,158,117,0.5);
+      transform: translateY(-4px);
+    }
+    .skill-cat {
+      font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); font-family: 'DM Mono', monospace;
+      margin-bottom: 14px;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .skill-tag {
+      background: rgba(29,158,117,0.08);
+      border: 1px solid rgba(29,158,117,0.15);
+      border-radius: 6px; padding: 5px 12px;
+      font-size: 12px; color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* ── PROJECTS ── */
+    .proj-hint {
+      font-size: 12px; color: var(--muted);
+      font-family: 'DM Mono', monospace;
+      margin-bottom: 1.5rem;
+    }
+    .proj-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .proj-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 18px; padding: 1.6rem;
+      transition: border-color 0.25s, transform 0.25s;
+      cursor: pointer; position: relative; overflow: hidden;
+    }
+    .proj-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:3px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      opacity:0; transition: opacity 0.3s;
+    }
+    .proj-card:hover { border-color: rgba(29,158,117,0.5); transform: translateY(-5px); }
+    .proj-card:hover::before { opacity:1; }
+    .proj-icon {
+      width:48px; height:48px; border-radius:12px;
+      background: rgba(29,158,117,0.12);
+      display:flex; align-items:center; justify-content:center;
+      font-size:24px; margin-bottom:16px;
+    }
+    .proj-title { font-size:1.1rem; font-weight:700; color:#fff; margin-bottom:6px; }
+    .proj-stack { font-size:11px; color:var(--accent); font-family:'DM Mono',monospace; margin-bottom:10px; }
+    .proj-desc  { font-size:13.5px; color:var(--muted); line-height:1.65; }
+    .proj-expand {
+      display:none; margin-top:16px; padding-top:16px;
+      border-top:1px solid var(--border);
+    }
+    .proj-expand.open { display:block; animation: fadeUp 0.2s ease; }
+    .proj-bullet {
+      font-size:13px; color:var(--muted);
+      margin-bottom:8px; display:flex; gap:10px; line-height:1.55;
+    }
+    .proj-bullet::before { content:'→'; color:var(--accent); flex-shrink:0; }
+    .proj-toggle-hint {
+      display:inline-block; margin-top:12px;
+      font-size:11px; color:var(--accent);
+      font-family:'DM Mono',monospace; opacity:0.7;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+    .edu-timeline { position:relative; padding-left:34px; }
+    .edu-timeline::before {
+      content:''; position:absolute;
+      left:9px; top:10px; bottom:10px; width:1px;
+      background: var(--border);
+    }
+    .edu-item { position:relative; margin-bottom:2.2rem; }
+    .edu-dot {
+      position:absolute; left:-29px; top:5px;
+      width:18px; height:18px; border-radius:50%;
+      background:var(--accent);
+      border:3px solid var(--dark);
+      box-shadow:0 0 0 1px var(--accent);
+    }
+    .edu-year {
+      font-size:11px; color:var(--accent);
+      font-family:'DM Mono',monospace; margin-bottom:5px;
+    }
+    .edu-deg  { font-size:1.05rem; font-weight:700; color:#fff; margin-bottom:4px; }
+    .edu-inst { font-size:13px; color:var(--muted); }
+    .edu-grade {
+      display:inline-block; margin-top:8px;
+      background:rgba(29,158,117,0.1);
+      border:1px solid var(--border);
+      border-radius:6px; padding:3px 12px;
+      font-size:11px; color:var(--accent);
+      font-family:'DM Mono',monospace;
+    }
+    /* edu right panel */
+    .edu-aside {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .edu-aside-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:16px; padding:1.25rem 1.5rem;
+    }
+    .edu-aside-label {
+      font-size:10px; letter-spacing:0.12em; text-transform:uppercase;
+      color:var(--accent); font-family:'DM Mono',monospace; margin-bottom:6px;
+    }
+    .edu-aside-val { font-size:1.5rem; font-weight:700; color:#fff; }
+    .edu-aside-sub { font-size:12px; color:var(--muted); margin-top:3px; }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .contact-card {
+      background:var(--card); border:1px solid var(--border);
+      border-radius:16px; padding:1.25rem 1.5rem;
+      display:flex; align-items:center; gap:16px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .contact-card:hover {
+      border-color:rgba(29,158,117,0.45);
+      transform:translateY(-3px);
+    }
+    .contact-icon {
+      width:44px; height:44px; border-radius:12px;
+      background:rgba(29,158,117,0.1);
+      display:flex; align-items:center; justify-content:center;
+      font-size:20px; flex-shrink:0; color:var(--accent);
+    }
+    .contact-label {
+      font-size:11px; color:var(--muted);
+      font-family:'DM Mono',monospace; margin-bottom:4px;
+    }
+    .contact-val { font-size:13.5px; color:var(--text); word-break:break-all; }
+    .contact-val a { color:var(--accent); text-decoration:none; }
+    .contact-val a:hover { text-decoration:underline; }
+
+    /* ── FOOTER ── */
+    footer {
+      position:relative; z-index:1; width:100%;
+      padding:1.2rem 6vw;
+      border-top:1px solid var(--border);
+      display:flex; justify-content:space-between; align-items:center;
+      font-size:11px; color:var(--muted);
+      font-family:'DM Mono',monospace;
+      flex-wrap:wrap; gap:8px;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width:6px; height:6px; }
+    ::-webkit-scrollbar-track { background:var(--dark); }
+    ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+    ::-webkit-scrollbar-thumb:hover { background:var(--accent2); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .about-layout { grid-template-columns:1fr; gap:2rem; }
+      .edu-layout   { grid-template-columns:1fr; }
+      .hero { grid-template-columns:1fr; }
+      .hero-deco { display:none; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding:2.5rem 5vw 2rem; }
+      main  { padding:2rem 5vw 3rem; }
+      nav   { padding:0 4vw; }
+      footer{ padding:1rem 5vw; }
+      .stat-grid { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="hero-left">
+    <div class="badge"><span class="dot"></span>Open to opportunities</div>
+    <h1 class="hero-name">Vishnu Prasad G</h1>
+    <p class="hero-sub">MCA Student &nbsp;·&nbsp; Full-Stack Developer &nbsp;·&nbsp; Bengaluru</p>
+    <div class="hero-links">
+      <span class="hero-link"><i class="ti ti-mail"></i>bhatvishnuprasadg@gmail.com</span>
+      <span class="hero-link"><i class="ti ti-phone"></i>+91 78992 07400</span>
+      <a class="hero-link" href="https://linkedin.com/in/vishnu-prasad-g-00b884392" target="_blank" rel="noopener">
+        <i class="ti ti-brand-linkedin"></i>LinkedIn
+      </a>
+      <a class="hero-link" href="https://github.com/bhatvishnuprasadg-hash" target="_blank" rel="noopener">
+        <i class="ti ti-brand-github"></i>GitHub
+      </a>
+    </div>
+  </div>
+  <div class="hero-deco" aria-hidden="true">VP</div>
+</header>
+
+<!-- ====== NAV ====== -->
+<nav role="navigation" aria-label="Portfolio sections">
+  <button class="nav-btn active" onclick="showSection('about',this)">About</button>
+  <button class="nav-btn"        onclick="showSection('skills',this)">Skills</button>
+  <button class="nav-btn"        onclick="showSection('projects',this)">Projects</button>
+  <button class="nav-btn"        onclick="showSection('education',this)">Education</button>
+  <button class="nav-btn"        onclick="showSection('contact',this)">Contact</button>
+</nav>
+
+<!-- ====== MAIN ====== -->
+<main>
+
+  <!-- ABOUT -->
+  <section id="about" class="section active" aria-label="About">
+    <div class="about-layout">
+      <div>
+        <blockquote class="about-quote">
+          "Seeking to contribute, learn, and grow as a developer in the IT industry."
+        </blockquote>
+        <p class="about-text">
+          First-year MCA student with a strong foundation in Computer Science fundamentals.
+          I build real-world applications spanning desktop, web, and console environments —
+          from a Spotify-inspired music player to a full catering management system.
+          I love writing clean, structured code and exploring new technologies and frameworks.
+        </p>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num">3</div>
+          <div class="stat-lbl">Projects Built</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">5+</div>
+          <div class="stat-lbl">Languages</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">7.94</div>
+          <div class="stat-lbl">BCA CGPA</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">2025</div>
+          <div class="stat-lbl">MCA Started</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="section" aria-label="Skills">
+    <h2 class="section-title">Technical skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-cat">Frontend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">HTML</span>
+          <span class="skill-tag">CSS</span>
+          <span class="skill-tag">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Backend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Core Java</span>
+          <span class="skill-tag">SpringBoot</span>
+          <span class="skill-tag">PHP</span>
+          <span class="skill-tag">Python</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Databases</div>
+        <div class="skill-tags">
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Dev Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub</span>
+          <span class="skill-tag">VS Code</span>
+          <span class="skill-tag">XAMPP</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Productivity</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Excel</span>
+          <span class="skill-tag">Word</span>
+          <span class="skill-tag">PowerPoint</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">Soft Skills</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Communication</span>
+          <span class="skill-tag">Problem-solving</span>
+          <span class="skill-tag">Analytical thinking</span>
+          <span class="skill-tag">Team player</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="section" aria-label="Projects">
+    <h2 class="section-title">Projects</h2>
+    <p class="proj-hint">↓ Click any card to expand details</p>
+    <div class="proj-grid">
+
+      <article class="proj-card" onclick="toggleProject(this)" tabindex="0" role="button" aria-expanded="false" onkeydown="if(event.key==='Enter')toggleProject(this)">
+        <div class="proj-icon">🎵</div>
+        <div class="proj-title">Music Player</div>
+        <div class="proj-stack">Java Swing · JLayer</div>
+        <div class="proj-desc">A Spotify-inspired desktop music player with full playback controls and a dark UI.</div>
+        <div class="proj-expand">
+          <div class="proj-bullet">Desktop app built using Java Swing with JLayer for audio playback</div>
+          <div class="proj-bullet">Play / pause / resume, next / previous, volume control, shuffle &amp; repeat</div>
+          <div class="proj-bullet">Spotify-dark UI with CardLayout, search &amp; playlist support</div>
+          <div class="proj-bullet">Core Java OOP concepts and Collections for modular, efficient design</div>
+        </div>
+        <span class="proj-toggle-hint">click to expand ↓</span>
+      </article>
+
+      <article class="proj-card" onclick="toggleProject(this)" tabindex="0" role="button" aria-expanded="false" onkeydown="if(event.key==='Enter')toggleProject(this)">
+        <div class="proj-icon">🎮</div>
+        <div class="proj-title">Hangman Game</div>
+        <div class="proj-stack">C · HTML · JavaScript</div>
+        <div class="proj-desc">Console-based word guessing game with clean logic and structured programming.</div>
+        <div class="proj-expand">
+          <div class="proj-bullet">Console Hangman in C with word selection and guess validation</div>
+          <div class="proj-bullet">Attempt tracking using arrays, strings, loops and conditionals</div>
+          <div class="proj-bullet">Focused on clean logic, user input handling and structured programming</div>
+        </div>
+        <span class="proj-toggle-hint">click to expand ↓</span>
+      </article>
+
+      <article class="proj-card" onclick="toggleProject(this)" tabindex="0" role="button" aria-expanded="false" onkeydown="if(event.key==='Enter')toggleProject(this)">
+        <div class="proj-icon">🍱</div>
+        <div class="proj-title">Nalapaaka</div>
+        <div class="proj-stack">PHP · JavaScript · HTML · CSS · SQL</div>
+        <div class="proj-desc">Online catering management system with customer, order and payment handling.</div>
+        <div class="proj-expand">
+          <div class="proj-bullet">Full web app in PHP with SQL for data persistence</div>
+          <div class="proj-bullet">Manage customers, payments, categories &amp; orders</div>
+          <div class="proj-bullet">Dynamic interactive UI using JavaScript across platforms</div>
+          <div class="proj-bullet">Arrays, strings, loops for managing business logic efficiently</div>
+        </div>
+        <span class="proj-toggle-hint">click to expand ↓</span>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education" class="section" aria-label="Education">
+    <h2 class="section-title">Education</h2>
+    <div class="edu-layout">
+      <!-- timeline -->
+      <div class="edu-timeline">
+        <div class="edu-item">
+          <div class="edu-dot"></div>
+          <div class="edu-year">2025 – Present</div>
+          <div class="edu-deg">Masters of Computer Applications</div>
+          <div class="edu-inst">Dayananda Sagar Academy of Technology and Management, Bengaluru</div>
+          <span class="edu-grade">Pursuing</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-dot"></div>
+          <div class="edu-year">2022 – 2025</div>
+          <div class="edu-deg">Bachelors of Computer Applications</div>
+          <div class="edu-inst">Canara College – Mangalore University, Mangaluru</div>
+          <span class="edu-grade">7.94 CGPA</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-dot"></div>
+          <div class="edu-year">2020 – 2022</div>
+          <div class="edu-deg">12th – Science (PCMC)</div>
+          <div class="edu-inst">Sarojini Madhusudhan Kushe Pre-University College, Mangaluru</div>
+          <span class="edu-grade">70.00% — Karnataka PU Board</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-dot"></div>
+          <div class="edu-year">2019 – 2020</div>
+          <div class="edu-deg">10th – KSEEB</div>
+          <div class="edu-inst">Sarojini Madhusudhan Kushe High School, Mangaluru</div>
+          <span class="edu-grade">82.88%</span>
+        </div>
+      </div>
+      <!-- aside cards -->
+      <div class="edu-aside">
+        <div class="edu-aside-card">
+          <div class="edu-aside-label">Current Degree</div>
+          <div class="edu-aside-val">MCA</div>
+          <div class="edu-aside-sub">Masters of Computer Applications</div>
+        </div>
+        <div class="edu-aside-card">
+          <div class="edu-aside-label">Undergraduate CGPA</div>
+          <div class="edu-aside-val">7.94</div>
+          <div class="edu-aside-sub">Bachelors of Computer Applications</div>
+        </div>
+        <div class="edu-aside-card">
+          <div class="edu-aside-label">12th Board Score</div>
+          <div class="edu-aside-val">70%</div>
+          <div class="edu-aside-sub">Karnataka PU Board — PCMC</div>
+        </div>
+        <div class="edu-aside-card">
+          <div class="edu-aside-label">10th Board Score</div>
+          <div class="edu-aside-val">82.88%</div>
+          <div class="edu-aside-sub">Karnataka Secondary Education Board</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section" aria-label="Contact">
+    <h2 class="section-title">Get in touch</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon"><i class="ti ti-mail"></i></div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-val"><a href="mailto:bhatvishnuprasadg@gmail.com">bhatvishnuprasadg@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><i class="ti ti-phone"></i></div>
+        <div>
+          <div class="contact-label">Phone</div>
+          <div class="contact-val"><a href="tel:+917899207400">+91 78992 07400</a></div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><i class="ti ti-map-pin"></i></div>
+        <div>
+          <div class="contact-label">Location</div>
+          <div class="contact-val">Bengaluru, Karnataka</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><i class="ti ti-brand-linkedin"></i></div>
+        <div>
+          <div class="contact-label">LinkedIn</div>
+          <div class="contact-val">
+            <a href="https://linkedin.com/in/vishnu-prasad-g-00b884392" target="_blank" rel="noopener">
+              vishnu-prasad-g-00b884392
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon"><i class="ti ti-brand-github"></i></div>
+        <div>
+          <div class="contact-label">GitHub</div>
+          <div class="contact-val">
+            <a href="https://github.com/bhatvishnuprasadg-hash" target="_blank" rel="noopener">
+              bhatvishnuprasadg-hash
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer>
+  <span>© 2025 Vishnu Prasad G</span>
+  <span>Built with ♥ from Bengaluru</span>
+</footer>
+
+<!-- ====== JAVASCRIPT ====== -->
+<script>
+  function showSection(id, btn) {
+    document.querySelectorAll('.section').forEach(function(s) {
+      s.classList.remove('active');
+    });
+    document.querySelectorAll('.nav-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleProject(card) {
+    var expand = card.querySelector('.proj-expand');
+    var hint   = card.querySelector('.proj-toggle-hint');
+    var isOpen = expand.classList.toggle('open');
+    card.setAttribute('aria-expanded', isOpen.toString());
+    if (hint) {
+      hint.textContent = isOpen ? 'click to collapse ↑' : 'click to expand ↓';
+    }
+  }
+</script>
+
+</body>
+</html>
